@@ -1,0 +1,23 @@
+<template>
+    <template if:true={pixelMatrix}>
+
+        <div>
+            <lightning-button label="GRID" title="GRID" onclick={toggleGrid}></lightning-button>
+            <lightning-button label="ZOOM+" title="ZOOM+" onclick={zoomIn}></lightning-button>
+            <lightning-button label="ZOOM-" title="ZOOM-" onclick={zoomOut}></lightning-button>
+        </div>
+
+        <div class="slds-clearfix">
+            <div class="icon">
+                <template for:each={pixelMatrix} for:item="row">
+                    <div key={row.index} class="row">
+                        <template for:each={row.pixels} for:item="pixel">
+                            <div data-sfid={pixel.Id} data-color={pixel.Color__r.Value__c} onclick={pixelClick} class="px" key={pixel.Id} style={pixel.style}></div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+        </div>
+       
+    </template>
+</template>

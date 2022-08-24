@@ -1,0 +1,25 @@
+.icon {
+    float: left;
+    border-top-style: var(--gridStyle);
+    border-top-color: var(--gridColor);
+    border-top-width: var(--gridWidth);
+    border-left-style: var(--gridStyle);
+    border-left-color: var(--gridColor);
+    border-left-width: var(--gridWidth);
+} 
+
+.row {
+    overflow: auto;
+}
+
+.px {
+    float: left;
+    height: var(--pixelSize);
+    width: var(--pixelSize);   
+    border-right-style: var(--gridStyle);
+    border-right-color: var(--gridColor);
+    border-right-width: var(--gridWidth);
+    border-bottom-style: var(--gridStyle);
+    border-bottom-color: var(--gridColor);
+    border-bottom-width: var(--gridWidth);
+}

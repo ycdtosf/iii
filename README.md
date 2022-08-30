@@ -41,3 +41,7 @@ The purpose of iconDisplay is to render the Icon.
 # Backlog
 
 * Pixel coordinates should not exceed Icon dimensions.
+* Debounce hovers to confirm intent.
+* IconUser for presence/timeout/highlight.
+* Generate new Icon.
+* Support >2 colors.

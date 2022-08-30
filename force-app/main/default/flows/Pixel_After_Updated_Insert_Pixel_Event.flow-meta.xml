@@ -46,6 +46,12 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>Type__c</field>
+            <value>
+                <stringValue>CLICK</stringValue>
+            </value>
+        </inputAssignments>
         <object>PixelEvent__e</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>

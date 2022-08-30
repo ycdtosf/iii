@@ -12,7 +12,7 @@
                 <template for:each={pixelMatrix} for:item="row">
                     <div key={row.index} class="row">
                         <template for:each={row.pixels} for:item="pixel">
-                            <div data-sfid={pixel.Id} data-color={pixel.Color__r.Value__c} onclick={pixelClick} class="px" key={pixel.Id} style={pixel.style}></div>
+                            <div data-sfid={pixel.Id} data-color={pixel.Color__r.Value__c} onmouseenter={pixelHover} onmouseleave={pixelLeave} onclick={pixelClick} class="px" key={pixel.Id} style={pixel.style}></div>
                         </template>
                     </div>
                 </template>

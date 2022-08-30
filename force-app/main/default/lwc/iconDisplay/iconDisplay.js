@@ -2,6 +2,8 @@ import { LightningElement, api, track } from 'lwc';
 import loadIcon from '@salesforce/apex/lwcIconDisplay.loadIcon';
 import loadPixels from '@salesforce/apex/lwcIconDisplay.loadPixels';
 import loadColors from '@salesforce/apex/lwcIconDisplay.loadColors';
+import writePixelHover from '@salesforce/apex/lwcIconDisplay.writePixelHover';
+import writePixelLeave from '@salesforce/apex/lwcIconDisplay.writePixelLeave';
 import { updateRecord } from 'lightning/uiRecordApi';
 import { subscribe, unsubscribe, onError, setDebugFlag, isEmpEnabled } from 'lightning/empApi';
 
@@ -13,7 +15,7 @@ export default class IconDisplay extends LightningElement {
     @track pixelMatrix;
     inited = false;
     channelName = '/event/PixelEvent__e';
-    
+
     _gridWidth;
     get gridWidth() { return this._gridWidth; }
     set gridWidth(value) { 
@@ -53,9 +55,18 @@ export default class IconDisplay extends LightningElement {
                 let iconId = response.data.payload.IconId__c;
                 let pixelId = response.data.payload.PixelId__c;
                 let color = response.data.payload.Color__c;
+                let type = response.data.payload.Type__c;
 
                 if(_this.recordId === iconId) {
-                    _this.setPixelElementStyle(pixelId, color);
+                    if(type === 'CLICK') {
+                        _this.setPixelClickStyle(pixelId, color);
+                    }
+                    if(type === 'HOVER') {
+                        _this.setPixelHoverStyle(pixelId, color);
+                    }
+                    if(type === 'LEAVE') {
+                        _this.setPixelLeaveStyle(pixelId);
+                    }
                 }
 
                 console.log('New message received: ', JSON.stringify(response));
@@ -80,8 +91,6 @@ export default class IconDisplay extends LightningElement {
             this.inited = true;
         }
     }
-
-    
 
     buildPixelMatrix() {
 
@@ -123,11 +132,42 @@ export default class IconDisplay extends LightningElement {
         return this.colors.find(item => item.Value__c === val);
     }
 
-    setPixelElementStyle(sfid, color) {
+    setPixelHoverStyle(sfid, color) {
+        let style = 'border: solid 1px ' + color + ';';
+        let element = this.template.querySelector('[data-sfid="' + sfid + '"]');
+        element.style.borderColor = color;
+        element.style.borderStyle = 'solid';
+        element.style.borderWidth = '1px';
+    }
+
+    setPixelLeaveStyle(sfid) {
+        let style = 'border: 0px';
+        let element = this.template.querySelector('[data-sfid="' + sfid + '"]');
+        element.style.borderWidth = '0px';
+    }
+
+    setPixelClickStyle(sfid, color) {
         let style = 'background-color:' + color + ';';
         let element = this.template.querySelector('[data-sfid="' + sfid + '"]');
-        element.style = style;
+        element.style.backgroundColor = color;
         element.dataset.color = color;
+    }
+
+    async pixelHover(e) {
+        let sfid = e.srcElement.dataset.sfid;
+        await writePixelHover({ 
+            iconId : this.recordId,
+            pixelId : sfid,
+            color : '#CC3333' 
+        });
+    }
+
+    async pixelLeave(e) {
+        let sfid = e.srcElement.dataset.sfid;
+        await writePixelLeave({ 
+            iconId : this.recordId,
+            pixelId : sfid
+        });
     }
 
     async pixelClick(e) {
@@ -137,7 +177,7 @@ export default class IconDisplay extends LightningElement {
         if(color === '#FFFFFF') color = '#000000';
         else color = '#FFFFFF';
 
-        this.setPixelElementStyle(sfid, color);
+        this.setPixelClickStyle(sfid, color);
 
         let colorRecord = this.findColorByValue(color);
 

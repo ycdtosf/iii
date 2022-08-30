@@ -32,4 +32,25 @@ public with sharing class lwcIconDisplay {
         return [select Id, Name, Value__c from Color__c];
     }
 
+    @AuraEnabled
+    public static void writePixelHover(Id iconId, Id pixelId, String color) {
+        PixelEvent__e e = new PixelEvent__e(
+            IconId__c = iconId,
+            PixelId__c = pixelId, 
+            Type__c = 'HOVER',
+            Color__c = color
+        );
+        EventBus.publish(e);
+    }
+
+    @AuraEnabled
+    public static void writePixelLeave(Id iconId, Id pixelId) {
+        PixelEvent__e e = new PixelEvent__e(
+            IconId__c = iconId,
+            PixelId__c = pixelId, 
+            Type__c = 'LEAVE'
+        );
+        EventBus.publish(e);
+    }
+
 }

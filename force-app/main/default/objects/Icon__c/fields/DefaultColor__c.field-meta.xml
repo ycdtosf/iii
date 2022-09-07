@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DefaultColor__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>The Color of the the Pixels when the Icon is first created.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The Color of the the Pixels when the Icon is first created.</inlineHelpText>
+    <label>Default Color</label>
+    <referenceTo>Color__c</referenceTo>
+    <relationshipLabel>Default Color Icons</relationshipLabel>
+    <relationshipName>DefaultColorIcons</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

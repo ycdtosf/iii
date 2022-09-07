@@ -18,6 +18,10 @@
                 <behavior>Required</behavior>
                 <field>Height__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DefaultColor__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

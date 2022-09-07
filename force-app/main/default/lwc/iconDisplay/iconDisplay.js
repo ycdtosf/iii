@@ -15,6 +15,7 @@ export default class IconDisplay extends LightningElement {
     @track pixelMatrix;
     inited = false;
     channelName = '/event/PixelEvent__e';
+    pixelClickColor = '#000000';
 
     _gridWidth;
     get gridWidth() { return this._gridWidth; }
@@ -128,6 +129,18 @@ export default class IconDisplay extends LightningElement {
         if(this.pixelSize < 1) this.pixelSize = 1;
     } 
 
+    setPixelClickColor(e) {
+
+        let newColor = e.detail.value;
+        const regex = new RegExp('^#(?:[0-9a-fA-F]{3}){1,2}$', 'g');
+
+        if(regex.test(newColor) && newColor.length === 7) {
+            this.pixelClickColor = newColor;
+            e.srcElement.style.color = newColor;
+        }
+        
+    }
+
     findColorByValue(val) {
         return this.colors.find(item => item.Value__c === val);
     }
@@ -141,13 +154,11 @@ export default class IconDisplay extends LightningElement {
     }
 
     setPixelLeaveStyle(sfid) {
-        let style = 'border: 0px';
         let element = this.template.querySelector('[data-sfid="' + sfid + '"]');
         element.style.borderWidth = '0px';
     }
 
     setPixelClickStyle(sfid, color) {
-        let style = 'background-color:' + color + ';';
         let element = this.template.querySelector('[data-sfid="' + sfid + '"]');
         element.style.backgroundColor = color;
         element.dataset.color = color;
@@ -173,21 +184,29 @@ export default class IconDisplay extends LightningElement {
     async pixelClick(e) {
 
         let sfid = e.srcElement.dataset.sfid;
-        let color = e.srcElement.dataset.color;
-        if(color === '#FFFFFF') color = '#000000';
-        else color = '#FFFFFF';
+        //let color = e.srcElement.dataset.color;
+        //if(color === '#FFFFFF') color = '#000000';
+        //else color = '#FFFFFF';
 
-        this.setPixelClickStyle(sfid, color);
+        this.setPixelClickStyle(sfid, this.pixelClickColor);
 
-        let colorRecord = this.findColorByValue(color);
+        let colorRecord = this.findColorByValue(this.pixelClickColor);
+
+        let updatedRecord = {
+            fields: {
+                Id : sfid
+            }
+        };
+
+        if(colorRecord === undefined) {
+            updatedRecord.fields.ColorValue__c = this.pixelClickColor;
+        }
+        else {
+            updatedRecord.fields.Color__c = colorRecord.Id;
+        }
 
         try {
-            await updateRecord({ 
-                fields: {
-                    Id : sfid,
-                    Color__c : colorRecord.Id
-                }
-            });
+            await updateRecord(updatedRecord);
         }
         catch(error) {
             console.log(error);

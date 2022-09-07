@@ -2,9 +2,12 @@
     <template if:true={pixelMatrix}>
 
         <div>
-            <lightning-button label="GRID" title="GRID" onclick={toggleGrid}></lightning-button>
-            <lightning-button label="ZOOM+" title="ZOOM+" onclick={zoomIn}></lightning-button>
-            <lightning-button label="ZOOM-" title="ZOOM-" onclick={zoomOut}></lightning-button>
+            <lightning-button-group>
+                <lightning-button-icon variant="border-filled" alternative-text="GRID" icon-name="utility:apps" onclick={toggleGrid}></lightning-button-icon>
+                <lightning-button-icon variant="border-filled" alternative-text="ZOOM+" icon-name="utility:zoomin" onclick={zoomIn}></lightning-button-icon>
+                <lightning-button-icon variant="border-filled" alternative-text="ZOOM-" icon-name="utility:zoomout" onclick={zoomOut}></lightning-button-icon>
+                <lightning-input value={pixelClickColor} onchange={setPixelClickColor} type="text" label="Enter some text"></lightning-input>
+            </lightning-button-group>
         </div>
 
         <div class="slds-clearfix">
@@ -12,7 +15,7 @@
                 <template for:each={pixelMatrix} for:item="row">
                     <div key={row.index} class="row">
                         <template for:each={row.pixels} for:item="pixel">
-                            <div data-sfid={pixel.Id} data-color={pixel.Color__r.Value__c} onmouseenter={pixelHover} onmouseleave={pixelLeave} onclick={pixelClick} class="px" key={pixel.Id} style={pixel.style}></div>
+                            <div data-sfid={pixel.Id} data-color={pixel.Color__r.Value__c} onclick={pixelClick} class="px" key={pixel.Id} style={pixel.style}></div>
                         </template>
                     </div>
                 </template>

@@ -2,6 +2,9 @@ public with sharing class IconService {
     
     public static void createIconPixels(Icon__c icon) {
         
+        return;
+
+        /*
         List<Pixel__c> pixels = new List<Pixel__c>();
         
         for(Integer r = 0; r < icon.Width__c; r++) {
@@ -15,7 +18,7 @@ public with sharing class IconService {
             }
         }
 
-        insert pixels;
+        insert pixels;*/
 
     }
 

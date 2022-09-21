@@ -52,6 +52,11 @@
         <field>Pixel__c.Color__c</field>
         <readable>false</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Pixel__c.Index__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
     <layoutAssignments>
         <layout>Color__c-Color Layout</layout>
     </layoutAssignments>

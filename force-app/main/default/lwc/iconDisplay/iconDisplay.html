@@ -15,7 +15,14 @@
                 <template for:each={pixelMatrix} for:item="row">
                     <div key={row.index} class="row">
                         <template for:each={row.pixels} for:item="pixel">
-                            <div data-sfid={pixel.Id} data-color={pixel.Color__r.Value__c} onclick={pixelClick} class="px" key={pixel.Id} style={pixel.style}></div>
+
+                            <div key={pixel.Id}>
+                                {pixel.Index__c} | {pixel.Y__c} | {pixel.X__c}
+                            </div>
+
+                            <!--<div data-sfid={pixel.Id} data-color={pixel.Color__r.Value__c} onclick={pixelClick} class="px" key={pixel.Id} style={pixel.style}>
+                                <span style="color: #FFFFFF;">{pixel.Y__c} / {pixel.X__c}</span>
+                            </div>-->
                         </template>
                     </div>
                 </template>

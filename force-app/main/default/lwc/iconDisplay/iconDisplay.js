@@ -10,7 +10,7 @@ import { subscribe, unsubscribe, onError, setDebugFlag, isEmpEnabled } from 'lig
 export default class IconDisplay extends LightningElement {
 
     @api recordId;
-    pixels;
+    pixels = [];
     colors;
     @track pixelMatrix;
     inited = false;
@@ -45,8 +45,21 @@ export default class IconDisplay extends LightningElement {
     async init() {
         try {
             this.colors = await loadColors();
+
+            let recordChunkCount = 5000;
+            let idx = 0;
+            let somePixels = null;
+            let resultCount = 0;
+
             this.icon = await loadIcon({ iconId : this.recordId });
-            this.pixels = await loadPixels({ iconId : this.recordId });
+
+            do {
+                somePixels = await loadPixels({ iconId : this.recordId, indexStart : idx, recordCount : recordChunkCount });
+                resultCount = somePixels.length;
+                idx += resultCount;
+                this.pixels.push(...somePixels);
+            } while(resultCount > 0);
+
             this.buildPixelMatrix();
 
             let _this = this;
@@ -98,6 +111,12 @@ export default class IconDisplay extends LightningElement {
         let matrix = [];
         let rowIndex = -1;
 
+        this.pixels.forEach(px => {
+            if(matrix[px.Y__c] === undefined) matrix[px.Y__c] = [];
+            matrix[px.Y__c][px.X__c] = px;
+        });
+
+        /*
         for(let p = 0; p < this.pixels.length; p++) {
             
             let pixel = this.pixels[p];
@@ -110,7 +129,7 @@ export default class IconDisplay extends LightningElement {
             
             matrix[rowIndex].pixels.push(pixel);
 
-        }
+        }*/
 
         this.pixelMatrix = matrix;
         

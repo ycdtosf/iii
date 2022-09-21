@@ -14,17 +14,27 @@ public with sharing class lwcIconDisplay {
     }
     
     @AuraEnabled
-    public static List<Pixel__c> loadPixels(Id iconId) {
-        return [select 
+    public static List<Pixel__c> loadPixels(Id iconId, Integer indexStart, Integer recordCount) {
+
+        List<Pixel__c> pixels = new List<Pixel__c>();
+
+        Integer indexEnd = indexStart + recordCount;
+
+        return [
+            select 
             Id, 
             X__c, 
             Y__c, 
+            Index__c,
             Color__r.Name,
             Color__r.Value__c
             from Pixel__c
             where Icon__c = :iconId
+            and Index__c >= :indexStart
+            and Index__c < :indexEnd
             order by Y__c asc, X__c asc
         ];
+       
     }
 
     @AuraEnabled

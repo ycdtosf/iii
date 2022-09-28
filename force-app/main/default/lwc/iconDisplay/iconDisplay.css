@@ -1,3 +1,30 @@
+.overflow {
+    width: 200px;
+    height: 200px;
+    border: solid 5px #000;
+    overflow: hidden;
+}
+
+.rect {
+    width: 400px;
+    height: 100px;
+    background-color: #CC3333;
+}
+
+.icon-flex {
+    display: flex;
+    flex-wrap: wrap;
+    width: 468px;
+}
+
+.icon-flex .px {
+    width: 1px;
+    height: 1px;
+    background-color: #CC3333;
+}
+
+
+
 .icon {
     float: left;
     border-top-style: var(--gridStyle);

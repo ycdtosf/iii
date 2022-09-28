@@ -16,6 +16,7 @@ export default class IconDisplay extends LightningElement {
     inited = false;
     channelName = '/event/PixelEvent__e';
     pixelClickColor = '#000000';
+    componentInstanceId = self.crypto.randomUUID();
 
     _gridWidth;
     get gridWidth() { return this._gridWidth; }
@@ -70,8 +71,9 @@ export default class IconDisplay extends LightningElement {
                 let pixelId = response.data.payload.PixelId__c;
                 let color = response.data.payload.Color__c;
                 let type = response.data.payload.Type__c;
+                let interactionId = response.data.payload.UniqueId__c;
 
-                if(_this.recordId === iconId) {
+                if(_this.recordId === iconId && _this.componentInstanceId !== interactionId) {
                     if(type === 'CLICK') {
                         _this.setPixelClickStyle(pixelId, color);
                     }
@@ -109,11 +111,11 @@ export default class IconDisplay extends LightningElement {
     buildPixelMatrix() {
 
         let matrix = [];
-        let rowIndex = -1;
 
         this.pixels.forEach(px => {
-            if(matrix[px.Y__c] === undefined) matrix[px.Y__c] = [];
-            matrix[px.Y__c][px.X__c] = px;
+            px.style = 'background-color:' + px.Color__r.Value__c + ';';
+            if(matrix[px.Y__c] === undefined) matrix[px.Y__c] = { index : px.Y__c, pixels : [] };
+            if(matrix[px.Y__c].pixels[px.X__c] === undefined) matrix[px.Y__c].pixels[px.X__c] = px;
         });
 
         /*
@@ -140,12 +142,14 @@ export default class IconDisplay extends LightningElement {
     }
 
     zoomIn(e) {
-        this.pixelSize = this.pixelSize * 2;  
+
+        let element = this.template.querySelector('.icon-flex');
+        element.style.transform = 'scale(2.0)';
     } 
 
     zoomOut(e) {
-        this.pixelSize = this.pixelSize / 2;
-        if(this.pixelSize < 1) this.pixelSize = 1;
+        let element = this.template.querySelector('.icon-flex');
+        element.style.transform = 'scale(1.0)';
     } 
 
     setPixelClickColor(e) {
@@ -213,12 +217,14 @@ export default class IconDisplay extends LightningElement {
 
         let updatedRecord = {
             fields: {
-                Id : sfid
+                Id : sfid,
+                InteractionId__c : this.componentInstanceId
             }
         };
 
         if(colorRecord === undefined) {
             updatedRecord.fields.ColorValue__c = this.pixelClickColor;
+            updatedRecord.fields.Color__c = null;
         }
         else {
             updatedRecord.fields.Color__c = colorRecord.Id;

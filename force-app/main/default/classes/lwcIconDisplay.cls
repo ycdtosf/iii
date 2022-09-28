@@ -32,7 +32,7 @@ public with sharing class lwcIconDisplay {
             where Icon__c = :iconId
             and Index__c >= :indexStart
             and Index__c < :indexEnd
-            order by Y__c asc, X__c asc
+            order by Index__c asc
         ];
        
     }

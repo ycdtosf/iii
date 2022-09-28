@@ -52,6 +52,12 @@
                 <stringValue>CLICK</stringValue>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>UniqueId__c</field>
+            <value>
+                <elementReference>$Record.InteractionId__c</elementReference>
+            </value>
+        </inputAssignments>
         <object>PixelEvent__e</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>

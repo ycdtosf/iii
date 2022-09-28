@@ -1,6 +1,14 @@
 <template>
     <template if:true={pixelMatrix}>
 
+        <div class="overflow">
+            <div class="icon-flex" draggable="true">
+                <template for:each={pixels} for:item="pixel">
+                    <div data-sfid={pixel.Id} data-color={pixel.Color__r.Value__c} onclick={pixelClick} class="px" key={pixel.Id}></div>
+                </template>
+            </div>
+        </div>
+
         <div>
             <lightning-button-group>
                 <lightning-button-icon variant="border-filled" alternative-text="GRID" icon-name="utility:apps" onclick={toggleGrid}></lightning-button-icon>
@@ -10,24 +18,20 @@
             </lightning-button-group>
         </div>
 
-        <div class="slds-clearfix">
-            <div class="icon">
-                <template for:each={pixelMatrix} for:item="row">
-                    <div key={row.index} class="row">
-                        <template for:each={row.pixels} for:item="pixel">
+        
 
-                            <div key={pixel.Id}>
-                                {pixel.Index__c} | {pixel.Y__c} | {pixel.X__c}
-                            </div>
-
-                            <!--<div data-sfid={pixel.Id} data-color={pixel.Color__r.Value__c} onclick={pixelClick} class="px" key={pixel.Id} style={pixel.style}>
-                                <span style="color: #FFFFFF;">{pixel.Y__c} / {pixel.X__c}</span>
-                            </div>-->
-                        </template>
-                    </div>
-                </template>
-            </div>
+        <!--
+        <div class="icon">
+            <template for:each={pixelMatrix} for:item="row">
+                <div key={row.index} class="row">
+                    <template for:each={row.pixels} for:item="pixel">
+                        <div data-sfid={pixel.Id} data-color={pixel.Color__r.Value__c} onclick={pixelClick} class="px" key={pixel.Id} style={pixel.style}></div>
+                    </template>
+                </div>
+            </template>
         </div>
+    -->
+        
        
     </template>
 </template>

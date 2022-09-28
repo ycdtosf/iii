@@ -44,6 +44,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>PixelEvent__e.UniqueId__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Pixel__c.ColorValue__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -55,6 +60,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Pixel__c.Index__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Pixel__c.InteractionId__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <layoutAssignments>

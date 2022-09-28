@@ -33,6 +33,11 @@
         <field>Pixel__c.Index__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Pixel__c.InteractionId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>III Admin</label>
     <objectPermissions>

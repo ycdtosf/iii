@@ -10,13 +10,14 @@ import { subscribe, unsubscribe, onError, setDebugFlag, isEmpEnabled } from 'lig
 export default class IconDisplay extends LightningElement {
 
     @api recordId;
-    pixels = [];
+    @track pixels = [];
     colors;
     @track pixelMatrix;
     inited = false;
     channelName = '/event/PixelEvent__e';
     pixelClickColor = '#000000';
     componentInstanceId = self.crypto.randomUUID();
+    iconFlexStyle = '';
 
     _gridWidth;
     get gridWidth() { return this._gridWidth; }
@@ -53,13 +54,19 @@ export default class IconDisplay extends LightningElement {
             let resultCount = 0;
 
             this.icon = await loadIcon({ iconId : this.recordId });
-
+            console.log(new Date().getTime());
             do {
                 somePixels = await loadPixels({ iconId : this.recordId, indexStart : idx, recordCount : recordChunkCount });
                 resultCount = somePixels.length;
                 idx += resultCount;
                 this.pixels.push(...somePixels);
             } while(resultCount > 0);
+            console.log(new Date().getTime());
+
+            this.iconFlexStyle = 'width: ' + this.icon.Width__c + 'px;';
+
+            //let element = this.template.querySelector('.icon-flex');
+            //element.style.width = this.icon.Width__c + 'px';
 
             this.buildPixelMatrix();
 
@@ -113,9 +120,9 @@ export default class IconDisplay extends LightningElement {
         let matrix = [];
 
         this.pixels.forEach(px => {
-            px.style = 'background-color:' + px.Color__r.Value__c + ';';
-            if(matrix[px.Y__c] === undefined) matrix[px.Y__c] = { index : px.Y__c, pixels : [] };
-            if(matrix[px.Y__c].pixels[px.X__c] === undefined) matrix[px.Y__c].pixels[px.X__c] = px;
+            px.style = 'width: 1px; height: 1px; background-color:' + px.Color__r.Value__c + ';';
+            //if(matrix[px.Y__c] === undefined) matrix[px.Y__c] = { index : px.Y__c, pixels : [] };
+            //if(matrix[px.Y__c].pixels[px.X__c] === undefined) matrix[px.Y__c].pixels[px.X__c] = px;
         });
 
         /*

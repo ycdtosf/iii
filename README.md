@@ -8,7 +8,7 @@ Make Icons in Salesforce for all the wrong reasons.
 
 The Icon object represents an icon with some dimensions.
 
-* Name
+* Nameo
 * Dimensions
 
 ### Pixel
@@ -40,8 +40,8 @@ The purpose of iconDisplay is to render the Icon.
 
 # Backlog
 
-* Pixel coordinates should not exceed Icon dimensions.
+* Pixel coordinates should not exceed Icon dimensions. [DONE]
 * Debounce hovers to confirm intent.
 * IconUser for presence/timeout/highlight.
 * Generate new Icon.
-* Support >2 colors.
+* Support >2 colors. [DONE]

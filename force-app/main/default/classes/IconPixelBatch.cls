@@ -1,6 +1,6 @@
 
 /*
-Icon__c i = [select Id, Width__c, Height__c, DefaultColor__c from Icon__c where Id = 'a021900000DYiDXAA1' limit 1];
+Icon__c i = [select Id, Width__c, Height__c, DefaultColor__c from Icon__c where Id = 'a021h000004a6IpAAI' limit 1];
 IconPixelBatch b = new IconPixelBatch();
 b.icon = i;
 Database.executeBatch(b);

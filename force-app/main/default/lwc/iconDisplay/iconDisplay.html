@@ -1,14 +1,15 @@
 <template>
-    <template if:true={pixelMatrix}>
+    <template if:true={inited}>
 
         <div class="overflow">
-            <div class="icon-flex" draggable="true">
+            <div class="icon-flex" style={iconFlexStyle}>
                 <template for:each={pixels} for:item="pixel">
-                    <div data-sfid={pixel.Id} data-color={pixel.Color__r.Value__c} onclick={pixelClick} class="px" key={pixel.Id}></div>
+                    <div key={pixel.Id} data-sfid={pixel.Id} data-color={pixel.Color__r.Value__c} onclick={pixelClick} style={pixel.style}></div>
                 </template>
             </div>
         </div>
 
+        <!--
         <div>
             <lightning-button-group>
                 <lightning-button-icon variant="border-filled" alternative-text="GRID" icon-name="utility:apps" onclick={toggleGrid}></lightning-button-icon>
@@ -16,12 +17,12 @@
                 <lightning-button-icon variant="border-filled" alternative-text="ZOOM-" icon-name="utility:zoomout" onclick={zoomOut}></lightning-button-icon>
                 <lightning-input variant="label-hidden" value={pixelClickColor} onchange={setPixelClickColor} type="text" label="Enter some text"></lightning-input>
             </lightning-button-group>
-        </div>
+        </div>-->
 
         
 
-        <!--
-        <div class="icon">
+        
+        <!--<div class="icon">
             <template for:each={pixelMatrix} for:item="row">
                 <div key={row.index} class="row">
                     <template for:each={row.pixels} for:item="pixel">
@@ -29,8 +30,8 @@
                     </template>
                 </div>
             </template>
-        </div>
-    -->
+        </div>-->
+    
         
        
     </template>

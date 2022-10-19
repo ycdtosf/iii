@@ -1,11 +1,16 @@
 <template>
     <template if:true={inited}>
 
-        <div class="overflow">
-            <div class="icon-flex" style={iconFlexStyle}>
-                <template for:each={pixels} for:item="pixel">
-                    <div key={pixel.Id} data-sfid={pixel.Id} data-color={pixel.Color__r.Value__c} onclick={pixelClick} style={pixel.style}></div>
-                </template>
+        <div class="view">
+            <div class="container">
+
+                <canvas id="canvas1" width="400" height="100" style="border: solid 2px #C33;"></canvas>
+
+                <!--<div class="icon-flex" style={iconFlexStyle}>
+                    <template for:each={pixels} for:item="pixel">
+                        <div key={pixel.Id} data-sfid={pixel.Id} data-color={pixel.Color__r.Value__c} onclick={pixelClick} style={pixel.style}></div>
+                    </template>
+                </div>-->
             </div>
         </div>
 

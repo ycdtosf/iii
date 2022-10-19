@@ -45,3 +45,4 @@ The purpose of iconDisplay is to render the Icon.
 * IconUser for presence/timeout/highlight.
 * Generate new Icon.
 * Support >2 colors. [DONE]
+* add event listeners to parent "view" component to help with mousemove control?

@@ -18,6 +18,11 @@ export default class IconDisplay extends LightningElement {
     pixelClickColor = '#000000';
     componentInstanceId = self.crypto.randomUUID();
     iconFlexStyle = '';
+    containerElement = null;
+    newPosX = 0;
+    newPosY = 0;
+    startPosX = 0;
+    startPosY = 0;
 
     _gridWidth;
     get gridWidth() { return this._gridWidth; }
@@ -43,6 +48,42 @@ export default class IconDisplay extends LightningElement {
 
         this.init();
     }
+
+    renderedCallback() {
+        if(this.containerElement === null && this.template.querySelector('.container') !== null) {
+            this.containerElement = this.template.querySelector('.container');
+
+            let handler = this.handleMouseDownMove.bind(this);
+
+            this.containerElement.addEventListener('mousedown', (mouseDownEvent) => {
+                mouseDownEvent.preventDefault();
+                this.startPosX = mouseDownEvent.clientX;
+                this.startPosY = mouseDownEvent.clientY;
+                this.containerElement.addEventListener('mousemove', handler);
+            });
+            this.containerElement.addEventListener('mouseup', (mouseUpEvent) => {
+                this.containerElement.removeEventListener('mousemove', handler);
+            });
+        }
+    }
+
+    handleMouseDownMove(e) {
+        console.log(e.clientX);
+        console.log(e.clientY);
+        // calculate the new position
+        this.newPosX = this.startPosX - e.clientX;
+        this.newPosY = this.startPosY - e.clientY;
+
+        // with each move we also want to update the start X and Y
+        this.startPosX = e.clientX;
+        this.startPosY = e.clientY;
+
+        // set the element's new position:
+        this.containerElement.style.top = (this.containerElement.offsetTop - this.newPosY) + "px";
+        this.containerElement.style.left = (this.containerElement.offsetLeft - this.newPosX) + "px";
+    }
+
+    // THANKS TONY - https://devdojo.com/tnylea/how-to-drag-an-element-using-javascript
 
     async init() {
         try {
